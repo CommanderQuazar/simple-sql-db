@@ -22,6 +22,7 @@ class SqlManager
         explicit SqlManager(std::string log_file) :
             _log_file(std::move(log_file))
         { };
+        SqlManager()                    = delete;
         SqlManager(SqlManager& copy)    = delete;
         SqlManager(SqlManager&& move)   = delete;
 
@@ -42,7 +43,6 @@ class SqlManager
         SqlManager& clear_table();
 
         inline unsigned int total_rows();
-        inline unsigned int total_rows(MYSQL_RES * result);
 
         inline void log(std::string& logMsg);
 
