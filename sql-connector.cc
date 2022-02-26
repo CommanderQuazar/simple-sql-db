@@ -69,17 +69,13 @@ void sql_manager(SqlManager * mgr_obj,
                 std::cout << "Enter a 'street' 'city' 'area code' 'state' (in that order)"
                           << std::endl;
                 std::cout << "Enter the street: ";
-                std::cin >> street;
-                std::cout << std::endl;
+                getline(std::cin, street);
                 std::cout << "Enter the city: ";
-                std::cin >> city;
-                std::cout << std::endl;
+                getline(std::cin, city);
                 std::cout << "Enter the area code: ";
-                std::cin >> area_code;
-                std::cout << std::endl;
+                getline(std::cin, area_code);
                 std::cout << "Enter the state: ";
-                std::cin >> state;
-                std::cout << std::endl;
+                getline(std::cin, state);
                 mgr_obj->add_item(street, city, area_code, state);
                 break;
             case '2':
