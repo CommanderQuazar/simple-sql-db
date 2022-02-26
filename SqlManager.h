@@ -15,34 +15,42 @@
 #include <fstream>
 #include <utility>
 
+enum sql_command_e {INSERT, SELECT, REMOVE};
+
 class SqlManager
 {
     public:
-    explicit SqlManager(std::string log_file) :
-        _log_file(std::move(log_file))
-    { };
-    SqlManager(SqlManager& copy)    = delete;
-    SqlManager(SqlManager&& move)   = delete;
+        explicit SqlManager(std::string log_file) :
+            _log_file(std::move(log_file))
+        { };
+        SqlManager(SqlManager& copy)    = delete;
+        SqlManager(SqlManager&& move)   = delete;
 
-    SqlManager& connect(std::string *   host,
-                        std::string *   user,
-                        std::string *   passwd,
-                        std::string *   db,
-                        unsigned int    port,
-                        std::string *   unix_socket,
-                        unsigned long   client_flag);
+        SqlManager& connect(std::string *   host,
+                            std::string *   user,
+                            std::string *   passwd,
+                            std::string *   db,
+                            unsigned int    port,
+                            std::string *   unix_socket,
+                            unsigned long   client_flag);
 
-    SqlManager& display_table();
-    SqlManager& add_item();
-    SqlManager& remove_item();
-    SqlManager& clear_table();
+        SqlManager& display_table();
+        SqlManager& add_item(const std::string& street,
+                             const std::string& city,
+                             const std::string& area_code,
+                             const std::string& state);
+        SqlManager& remove_item(const std::string& id);
+        SqlManager& clear_table();
 
-    inline void log(std::string& logMsg);
+        inline unsigned int total_rows();
+        inline unsigned int total_rows(MYSQL_RES * result);
+
+        inline void log(std::string& logMsg);
 
     private:
-    MYSQL _mysql {};
-    std::string _log_file;
-    static inline std::string get_curr_time_date(const std::string& s);
+        MYSQL _mysql {};
+        std::string _log_file;
+        static inline std::string get_curr_time_date(const std::string& s);
 };
 
 #endif //SIMPLE_SQL_DB__SQLMANAGER_H_

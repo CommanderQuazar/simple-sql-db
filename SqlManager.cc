@@ -33,20 +33,19 @@ SqlManager& SqlManager::connect(std::string * host,
  */
 SqlManager &SqlManager::display_table()
 {
-    MYSQL_ROW row;
-    MYSQL_RES *result;
-    unsigned int num_fields;
-    unsigned int i;
+    MYSQL_ROW       row ;
+    MYSQL_RES *     result {};
+    unsigned int    num_fields;
+    unsigned int    i;
 
     if(mysql_query(&_mysql, "SELECT * FROM Address"))
     {
-        fprintf(stderr, "Error: %s\n",
-                mysql_error(&_mysql));
+        fprintf(stderr, "Error: %s\n", mysql_error(&_mysql));
     }
     else
     {
-        result = mysql_store_result(&_mysql);
-        num_fields = mysql_num_fields(result);
+        num_fields = total_rows(result);
+
         while ((row = mysql_fetch_row(result)))
         {
             unsigned long *lengths;
@@ -63,17 +62,28 @@ SqlManager &SqlManager::display_table()
 /*
  * Adds a row to the table
  */
-SqlManager &SqlManager::add_item()
+SqlManager &SqlManager::add_item(const std::string& street,
+                                 const std::string& city,
+                                 const std::string& area_code,
+                                 const std::string& state)
 {
+    std::string query = "INSERT INTO Address (street, City, area_code, state) "
+                        "VALUES ('" + street + "', '" + city + "', '" + area_code
+                        + "', '" + state + "')";
 
+    mysql_query(&_mysql, query.c_str());
+    return *this;
 }
 
 /*
  * Removes a row from the table
  */
-SqlManager &SqlManager::remove_item()
+SqlManager &SqlManager::remove_item(const std::string& id)
 {
+    std::string query = "DELETE FROM Address WHERE id=" + id;
 
+    mysql_query(&_mysql, query.c_str());
+    return *this;
 }
 
 /*
@@ -112,3 +122,16 @@ void SqlManager::log(std::string& logMsg)
     ofs << now << '\t' << logMsg << '\n';
     ofs.close();
 }
+
+inline unsigned int SqlManager::total_rows()
+{
+    MYSQL_RES * result = mysql_store_result(&_mysql);
+    return mysql_num_fields(result);
+}
+
+inline unsigned int SqlManager::total_rows(MYSQL_RES * result)
+{
+    result = mysql_store_result(&_mysql);
+    return mysql_num_fields(result);
+}
+
