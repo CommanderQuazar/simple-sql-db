@@ -44,7 +44,7 @@ class SqlManager
 
         inline unsigned int total_rows();
 
-        inline void log(std::string& logMsg);
+        inline void log(const std::string& logMsg);
 
     private:
         MYSQL _mysql {};

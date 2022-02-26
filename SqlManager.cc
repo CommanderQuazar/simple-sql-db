@@ -21,10 +21,10 @@ SqlManager& SqlManager::connect(std::string * host,
                             unix_socket == nullptr ? nullptr : unix_socket->c_str(),
                             client_flag))
     {
-        fprintf(stderr, "Failed to connect to database: Error: %s\n",
-                mysql_error(&_mysql));
+        log(mysql_error(&_mysql));
+        return *this;
     }
-
+    log("Connect to MySql database: " + *db);
     return *this;
 }
 
@@ -64,6 +64,7 @@ SqlManager &SqlManager::display_table()
         }
     }
     std::cout << std::endl;
+    log("Table content displayed");
     return *this;
 }
 
@@ -80,6 +81,7 @@ SqlManager &SqlManager::add_item(const std::string& street,
                         + "', '" + state + "')";
 
     mysql_query(&_mysql, query.c_str());
+    log("Row added to the table");
     return *this;
 }
 
@@ -91,6 +93,7 @@ SqlManager &SqlManager::remove_item(const std::string& id)
     std::string query = "DELETE FROM Address WHERE id=" + id;
 
     mysql_query(&_mysql, query.c_str());
+    log("Row removed from table: " + id);
     return *this;
 }
 
@@ -100,6 +103,7 @@ SqlManager &SqlManager::remove_item(const std::string& id)
 SqlManager &SqlManager::clear_table()
 {
     mysql_query(&_mysql, "DELETE FROM Address");
+    log("Table cleared");
     return *this;
 }
 
@@ -123,9 +127,9 @@ std::string SqlManager::get_curr_time_date(const std::string& s)
 /*
  * Logs a message to a user specified log file
  */
-void SqlManager::log(std::string& logMsg)
+void SqlManager::log(const std::string& logMsg)
 {
-    std::string filePath = _log_file + get_curr_time_date("date")+".txt";
+    std::string filePath = _log_file;
     std::string now = get_curr_time_date("now");
     std::ofstream ofs(filePath.c_str(), std::ios_base::out | std::ios_base::app );
     ofs << now << '\t' << logMsg << '\n';
