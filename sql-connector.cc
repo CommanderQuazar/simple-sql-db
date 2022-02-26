@@ -56,9 +56,9 @@ void sql_manager(SqlManager * mgr_obj,
         char MMUserChoice;
         size_t size = sizeof(choices)/sizeof(choices[0]);
 
-        printf("+----------------------------------------------------------------+\n");
-        printf("|                            Main Menu                           |\n");
-        printf("+----------------------------------------------------------------+\n");
+        printf("+----------------------------------+\n");
+        printf("|             Main Menu            |\n");
+        printf("+----------------------------------+\n");
         printf("1. Add Entry\n2. Remove Entry\n3. View Table\nPress q at any time to quit"
                "\n\n");
 
@@ -67,13 +67,17 @@ void sql_manager(SqlManager * mgr_obj,
         switch (MMUserChoice)
         {
             case '1':
-
+                std::string street, city, area_code, state;
+                std::cout << "Enter a 'street' 'city' 'area code' 'state' (in that order)"
+                          << std::endl;
+                std::cin >> street >> city >> area_code >> state;
+                mgr_obj->add_item(street, city, area_code, state);
                 break;
             case '2':
 
                 break;
             case '3':
-
+                mgr_obj->display_table();
                 break;
             case 'q':
                 printf("Quitting...\n");
