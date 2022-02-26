@@ -74,6 +74,14 @@ void sql_manager(MYSQL mysql)
 
 int main(int argc, char **argv)
 {
+    // Read in all program / database info
+    std::string host        = argv[0];
+    std::string username    = argv[1];
+    std::string passwrd     = argv[2];
+    std::string db          = argv[3];
+    std::string port        = argv[4];
+    std::string log_file    = argv[5];
+
     //mysql_query(&mysql, "INSERT INTO Address (street, City, area_code, state) "
     //                     "VALUES ('9843 56th SW', 'Seattle', 58934, 'WA')");
     return 0;
