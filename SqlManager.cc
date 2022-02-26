@@ -67,7 +67,7 @@ SqlManager &SqlManager::add_item(const std::string& street,
                                  const std::string& area_code,
                                  const std::string& state)
 {
-    std::string query = "INSERT INTO Address (street, City, area_code, state) "
+    std::string query = "INSERT INTO Address (street, city, area_code, state) "
                         "VALUES ('" + street + "', '" + city + "', '" + area_code
                         + "', '" + state + "')";
 
@@ -91,7 +91,8 @@ SqlManager &SqlManager::remove_item(const std::string& id)
  */
 SqlManager &SqlManager::clear_table()
 {
-
+    mysql_query(&_mysql, "DELETE FROM Address");
+    return *this;
 }
 
 std::string SqlManager::get_curr_time_date(const std::string& s)
