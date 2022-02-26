@@ -17,7 +17,6 @@ char selector(const char * options, size_t numberOfOptions)
     {
         std::cout << "Entry: ";
         std::cin.get(userChoice);
-        std::cout << userChoice;
 
         for(int i = 0; i < numberOfOptions; ++i)
         {
@@ -42,18 +41,17 @@ void sql_manager(SqlManager * mgr_obj,
                  std::string * database,
                  unsigned int port_num)
 {
-
     mgr_obj->connect(host,
-                        usern,
-                        passwd,
-                        database,
-                        port_num,
-                        nullptr,
-                        0);
+                     usern,
+                     passwd,
+                     database,
+                     port_num,
+                     nullptr,
+                     0);
     while(true)
     {
         const char choices[] = {'1', '2', '3', 'q'};
-        char MMUserChoice;
+        std::string street, city, area_code, state, id;
         size_t size = sizeof(choices)/sizeof(choices[0]);
 
         printf("+----------------------------------+\n");
@@ -62,19 +60,26 @@ void sql_manager(SqlManager * mgr_obj,
         printf("1. Add Entry\n2. Remove Entry\n3. View Table\nPress q at any time to quit"
                "\n\n");
 
-        MMUserChoice = selector(choices, size);
+        char mmUserChoice = selector(choices, size);
 
-        switch (MMUserChoice)
+        switch (mmUserChoice)
         {
             case '1':
-                std::string street, city, area_code, state;
                 std::cout << "Enter a 'street' 'city' 'area code' 'state' (in that order)"
                           << std::endl;
-                std::cin >> street >> city >> area_code >> state;
+                std::cout << "New entry: ";
+                std::cin >> street
+                         >> city
+                         >> area_code
+                         >> state;
                 mgr_obj->add_item(street, city, area_code, state);
                 break;
             case '2':
-
+                std::cout << "To delete a row, enter it's id"
+                          << std::endl;
+                std::cout << "ID: ";
+                std::cin >> id;
+                mgr_obj->remove_item(id);
                 break;
             case '3':
                 mgr_obj->display_table();
@@ -92,12 +97,12 @@ void sql_manager(SqlManager * mgr_obj,
 int main(int argc, char **argv)
 {
     // Read in all program / database info
-    std::string host        = argv[0];
-    std::string username    = argv[1];
-    std::string passwrd     = argv[2];
-    std::string db          = argv[3];
-    std::string port        = argv[4];
-    std::string log_file    = argv[5];
+    std::string host        = argv[1];
+    std::string username    = argv[2];
+    std::string passwrd     = argv[3];
+    std::string db          = argv[4];
+    std::string port        = argv[5];
+    std::string log_file    = argv[6];
 
     SqlManager sql_mgr(log_file);
     sql_manager(&sql_mgr,
@@ -105,7 +110,7 @@ int main(int argc, char **argv)
                 &username,
                 &passwrd,
                 &db,
-                std::stoi(port));
+                std::atoi(port.c_str()));   //TODO make this better for c++
 
     return 0;
 }
