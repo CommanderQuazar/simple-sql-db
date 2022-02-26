@@ -21,7 +21,7 @@ class SqlManager
     public:
         explicit SqlManager(std::string log_file) :
             _log_file(std::move(log_file))
-        { };
+            { };
         SqlManager()                    = delete;
         SqlManager(SqlManager& copy)    = delete;
         SqlManager(SqlManager&& move)   = delete;

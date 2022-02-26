@@ -22,6 +22,7 @@ char selector(const char * options, size_t numberOfOptions)
         {
             if(options[i] == userChoice)
             {
+                fflush(stdin);
                 return userChoice;
             }
             else
@@ -67,11 +68,18 @@ void sql_manager(SqlManager * mgr_obj,
             case '1':
                 std::cout << "Enter a 'street' 'city' 'area code' 'state' (in that order)"
                           << std::endl;
-                std::cout << "New entry: ";
-                std::cin >> street
-                         >> city
-                         >> area_code
-                         >> state;
+                std::cout << "Enter the street: ";
+                std::cin >> street;
+                std::cout << std::endl;
+                std::cout << "Enter the city: ";
+                std::cin >> city;
+                std::cout << std::endl;
+                std::cout << "Enter the area code: ";
+                std::cin >> area_code;
+                std::cout << std::endl;
+                std::cout << "Enter the state: ";
+                std::cin >> state;
+                std::cout << std::endl;
                 mgr_obj->add_item(street, city, area_code, state);
                 break;
             case '2':
