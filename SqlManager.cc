@@ -45,6 +45,11 @@ SqlManager &SqlManager::display_table()
     else
     {
         num_fields = total_rows(result);
+        if(num_fields == 0)
+        {
+            std::cout << "No Entries!" << std::endl;
+            return *this;
+        }
 
         while ((row = mysql_fetch_row(result)))
         {
