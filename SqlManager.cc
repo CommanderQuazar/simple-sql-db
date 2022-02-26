@@ -44,7 +44,8 @@ SqlManager &SqlManager::display_table()
     }
     else
     {
-        num_fields = total_rows(result);
+        result = mysql_store_result(&_mysql);
+        num_fields = mysql_num_fields(result);
         if(num_fields == 0)
         {
             std::cout << "No Entries!" << std::endl;
@@ -62,6 +63,8 @@ SqlManager &SqlManager::display_table()
             printf("\n");
         }
     }
+    std::cout << std::endl;
+    return *this;
 }
 
 /*
@@ -132,12 +135,6 @@ void SqlManager::log(std::string& logMsg)
 inline unsigned int SqlManager::total_rows()
 {
     MYSQL_RES * result = mysql_store_result(&_mysql);
-    return mysql_num_fields(result);
-}
-
-inline unsigned int SqlManager::total_rows(MYSQL_RES * result)
-{
-    result = mysql_store_result(&_mysql);
     return mysql_num_fields(result);
 }
 
