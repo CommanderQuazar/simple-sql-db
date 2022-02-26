@@ -7,6 +7,8 @@
 #include <iostream>
 #include <cstdio>
 
+#include "SqlManager.h"
+
 
 char selector(const char * options, size_t numberOfOptions)
 {
@@ -33,14 +35,26 @@ char selector(const char * options, size_t numberOfOptions)
     }
 }
 
-void sql_manager(MYSQL mysql)
+void sql_manager(SqlManager * mgr_obj,
+                 std::string * host,
+                 std::string * usern,
+                 std::string * passwd,
+                 std::string * database,
+                 unsigned int port_num)
 {
+
+    mgr_obj->connect(host,
+                        usern,
+                        passwd,
+                        database,
+                        port_num,
+                        nullptr,
+                        0);
     while(true)
     {
         const char choices[] = {'1', '2', '3', 'q'};
         char MMUserChoice;
         size_t size = sizeof(choices)/sizeof(choices[0]);
-
 
         printf("+----------------------------------------------------------------+\n");
         printf("|                            Main Menu                           |\n");
@@ -71,7 +85,6 @@ void sql_manager(MYSQL mysql)
     }
 }
 
-
 int main(int argc, char **argv)
 {
     // Read in all program / database info
@@ -82,7 +95,13 @@ int main(int argc, char **argv)
     std::string port        = argv[4];
     std::string log_file    = argv[5];
 
-    //mysql_query(&mysql, "INSERT INTO Address (street, City, area_code, state) "
-    //                     "VALUES ('9843 56th SW', 'Seattle', 58934, 'WA')");
+    SqlManager sql_mgr(log_file);
+    sql_manager(&sql_mgr,
+                &host,
+                &username,
+                &passwrd,
+                &db,
+                std::stoi(port));
+
     return 0;
 }

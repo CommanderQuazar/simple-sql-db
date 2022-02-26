@@ -15,7 +15,6 @@
 #include <fstream>
 #include <utility>
 
-enum sql_command_e {INSERT, SELECT, REMOVE};
 
 class SqlManager
 {
