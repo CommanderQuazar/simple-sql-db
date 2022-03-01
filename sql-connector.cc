@@ -4,9 +4,6 @@
 
 #include <mysql/mysql.h>
 
-#include <iostream>
-#include <cstdio>
-
 #include "SqlManager.h"
 
 

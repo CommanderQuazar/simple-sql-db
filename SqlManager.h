@@ -13,7 +13,6 @@
 
 #include <iostream>
 #include <fstream>
-#include <utility>
 
 
 class SqlManager
@@ -35,19 +34,21 @@ class SqlManager
                             unsigned long   client_flag);
 
         SqlManager& display_table();
+        SqlManager& add_user(const std::string& usern, const std::string& passph);
         SqlManager& add_item(const std::string& street,
                              const std::string& city,
                              const std::string& area_code,
                              const std::string& state);
+        SqlManager& add_contact(const std::string& phone_n,
+                                const std::string& address);
         SqlManager& remove_item(const std::string& id);
         SqlManager& clear_table();
 
         inline unsigned int total_rows();
-
-        inline void log(const std::string& logMsg);
+        inline void         log(const std::string& logMsg);
 
     private:
-        MYSQL _mysql {};
+        MYSQL       _mysql {};
         std::string _log_file;
         static inline std::string get_curr_time_date(const std::string& s);
 };

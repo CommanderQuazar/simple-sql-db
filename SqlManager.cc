@@ -3,6 +3,7 @@
 //
 
 #include "SqlManager.h"
+
 SqlManager& SqlManager::connect(std::string * host,
                          std::string * user,
                          std::string * passwd,
@@ -85,6 +86,11 @@ SqlManager &SqlManager::add_item(const std::string& street,
     return *this;
 }
 
+SqlManager &SqlManager::add_contact(const std::string &phone_n, const std::string &address)
+{
+
+}
+
 /*
  * Removes a row from the table
  */
@@ -141,4 +147,9 @@ inline unsigned int SqlManager::total_rows()
     MYSQL_RES * result = mysql_store_result(&_mysql);
     return mysql_num_fields(result);
 }
+SqlManager &SqlManager::add_user(const std::string &usern, const std::string &passph)
+{
+    return <#initializer#>;
+}
+
 
