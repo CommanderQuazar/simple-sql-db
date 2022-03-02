@@ -48,15 +48,16 @@ void sql_manager(SqlManager * mgr_obj,
                      0);
     while(true)
     {
-        const char choices[] = {'1', '2', '3', 'q'};
-        std::string street, city, area_code, state, id;
+        const char choices[] = {'1', '2', '3', '4', 'q'};
+        std::string street, city, area_code, state, id, to_find;
         size_t size = sizeof(choices)/sizeof(choices[0]);
 
         printf("+----------------------------------+\n");
         printf("|             Main Menu            |\n");
         printf("+----------------------------------+\n");
-        printf("1. Add Entry\n2. Remove Entry\n3. View Table\nPress q at any time to quit"
+        printf("1. Add Entry\n2. Remove Entry\n3. View Table\n4. Check Existence\nPress q at any time to quit"
                "\n\n");
+
 
         char mmUserChoice = selector(choices, size);
 
@@ -84,6 +85,11 @@ void sql_manager(SqlManager * mgr_obj,
                 break;
             case '3':
                 mgr_obj->display_table();
+                break;
+            case '4':
+                std::cout << "Enter a city to see if it exists: ";
+                std::cin >> to_find;
+                std::cout << mgr_obj->exists(to_find) << std::endl;
                 break;
             case 'q':
                 printf("Quitting...\n");
