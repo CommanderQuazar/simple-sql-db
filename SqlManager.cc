@@ -147,9 +147,24 @@ inline unsigned int SqlManager::total_rows()
     MYSQL_RES * result = mysql_store_result(&_mysql);
     return mysql_num_fields(result);
 }
+
 SqlManager &SqlManager::add_user(const std::string &usern, const std::string &passph)
 {
-    return <#initializer#>;
+
+}
+
+/*
+ * Checks if a certain value is in the cities colum
+ */
+unsigned int SqlManager::exists(const std::string &to_find)
+{
+    std::string query = "SELECT city FROM Address WHERE EXISTS ('" + to_find + "')";
+    if(!mysql_query(&_mysql, query.c_str()))
+    {
+        log("Query Error: exists()");
+    }
+    MYSQL_RES * result = mysql_store_result(&_mysql);
+    return mysql_num_rows(result);
 }
 
 

@@ -42,6 +42,7 @@ class SqlManager
         SqlManager& add_contact(const std::string& phone_n,
                                 const std::string& address);
         SqlManager& remove_item(const std::string& id);
+        unsigned int exists(const std::string& to_find);
         SqlManager& clear_table();
 
         inline unsigned int total_rows();
